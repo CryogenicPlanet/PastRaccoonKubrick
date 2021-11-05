@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Product Page</title>
+
+  <!-- Using Tailwind css for styling as it makes it really fast to style and makes thing look really nice -->
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet" />
+
+  <!-- Tailwind css forms plugin -->
+  <link href="https://unpkg.com/@tailwindcss/forms/dist/forms.min.css" rel="stylesheet" />
+
+  <!-- Axios my preferred http client -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+  <!-- Took a template from my personal subscription to https://tailwindui.com/ this is again to help prototyping speed and cause their designs look really good-->
+  <div class="bg-white">
+    <div class="pt-6">
+      <!-- Image gallery -->
+      <div class="
+            mt-6
+            max-w-2xl
+            mx-auto
+            sm:px-6
+            lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-3 lg:gap-x-8
+          ">
+        <div class="
+              hidden
+              aspect-w-3 aspect-h-4
+              rounded-lg
+              overflow-hidden
+              lg:block
+            ">
+          <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-secondary-product-shot.jpg"
+            alt="Two each of gray, white, and black shirts laying flat."
+            class="w-full h-full object-center object-cover" />
+        </div>
+        <div class="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
+          <div class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
+            <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-01.jpg"
+              alt="Model wearing plain black basic tee." class="w-full h-full object-center object-cover" />
+          </div>
+          <div class="aspect-w-3 aspect-h-2 rounded-lg overflow-hidden">
+            <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-tertiary-product-shot-02.jpg"
+              alt="Model wearing plain gray basic tee." class="w-full h-full object-center object-cover" />
+          </div>
+        </div>
+        <div class="
+              aspect-w-4 aspect-h-5
+              sm:rounded-lg sm:overflow-hidden
+              lg:aspect-w-3 lg:aspect-h-4
+            ">
+          <img src="https://tailwindui.com/img/ecommerce-images/product-page-02-featured-product-shot.jpg"
+            alt="Model wearing plain white basic tee." class="w-full h-full object-center object-cover" />
+        </div>
+      </div>
+
+      <!-- Product info -->
+      <div class="
+            max-w-2xl
+            mx-auto
+            pt-10
+            pb-16
+            px-4
+            sm:px-6
+            lg:max-w-7xl
+            lg:pt-16
+            lg:pb-24
+            lg:px-8
+            lg:grid
+            lg:grid-cols-3
+            lg:grid-rows-[auto,auto,1fr]
+            lg:gap-x-8
+          ">
+        <div class="lg:col-span-2 lg:border-r lg:border-gray-200 lg:pr-8">
+          <h1 class="
+                text-2xl
+                font-extrabold
+                tracking-tight
+                text-gray-900
+                sm:text-3xl
+              ">
+            Basic Tee 6-Pack
+          </h1>
+        </div>
+
+        <!-- Options -->
+        <div class="mt-4 lg:mt-0 lg:row-span-3">
+          <h2 class="sr-only">Product information</h2>
+          <p class="text-3xl text-gray-900">Submit Review</p>
+
+          <!-- Description and details -->
+
+          <div class="py-1">
+            <div class="sm:grid sm:grid-cols-3 sm:gap-4 sm:items-start sm:border-b sm:border-gray-200 sm:py-5">
+              <div class="mt-1 sm:mt-0 sm:col-span-3">
+                <p class="mb-2 text-sm text-gray-500">Your Review</p>
+                <textarea id="reviewBody" name="about" rows="3"
+                  class="max-w-lg shadow-sm block w-full focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm border border-gray-300 rounded-md"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="pt-5 py-2">
+            <div class="flex items-center">
+              <p class="text-lg pr-4">Your Rating</p>
+              <button onclick="handleRatingClick(1)">
+                <svg id="submitRating-1" class="text-gray-200 h-7 w-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              </button>
+              <button onclick="handleRatingClick(2)">
+                <svg id="submitRating-2" class="text-gray-200 h-7 w-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              </button>
+              <button onclick="handleRatingClick(3)">
+                <svg id="submitRating-3" class="text-gray-200 h-7 w-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              </button>
+              <button onclick="handleRatingClick(4)">
+                <svg id="submitRating-4" class="text-gray-200 h-7 w-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              </button>
+              <button onclick="handleRatingClick(5)">
+                <svg id="submitRating-5" class="text-gray-200 h-7 w-7 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path
+                    d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="flex py-3">
+            <div>
+              <button onclick="handleReviewSubmit()" class="
+                    w-full
+                    bg-indigo-600
+                    border border-transparent
+                    rounded-md
+                    py-1
+                    px-3
+                    flex
+                    items-center
+                    justify-center
+                    text-base
+                    font-medium
+                    text-white
+                    hover:bg-indigo-700
+                    focus:outline-none
+                    focus:ring-2
+                    focus:ring-offset-2
+                    focus:ring-indigo-500
+                  ">
+                Submit review
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="
+              py-10
+              lg:pt-6
+              lg:pb-16
+              lg:col-start-1
+              lg:col-span-2
+              lg:border-r
+              lg:border-gray-200
+              lg:pr-8
+            ">
+          <!-- Reviews -->
+          <div class="mt-2">
+            <h3 class="sr-only">Reviews</h3>
+            <div class="flex w-full items-center space-x-4">
+              <div id="totalRatingContainer" class="flex items-center"></div>
+              <p class="sr-only">4 out of 5 stars</p>
+              <span id="noOfReviews" class="
+                    ml-3
+                    text-sm
+                    font-medium
+                    text-indigo-600
+                    hover:text-indigo-500
+                  ">117 reviews</span>
+
+            </div>
+          </div>
+
+          <div class="py-10 w-full flex flex-col justify-center items-start">
+            <p class="text-xl font-bold">Reviews</p>
+            <div id="reviewsContainer" class="flex flex-col py-5 space-y-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hidden element templates to copy -->
+
+  <!-- Star template -->
+  <svg id="starTemplate" style="display: none" class="h-5 w-5 flex-shrink-0" xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+    <path
+      d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+  </svg>
+
+  <!-- Review template -->
+  <div id="reviewTemplate" style="display: none" class="flex items-center w-full space-x-4">
+    <div id="starContainer" class="flex items-center"></div>
+    <div id="textContainer" class="flex items-center text-md"></div>
+  </div>
+
+  <script src="./js/index.js"></script>
+</body>
+
+</html>
