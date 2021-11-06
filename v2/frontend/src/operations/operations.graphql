@@ -1,0 +1,25 @@
+mutation CreateReview($projectName: String!, $description: String!, $rating: Float!) {
+  createReview(projectName: $projectName, description: $description, rating: $rating) {
+    description
+    rating
+  }
+}
+
+
+subscription NewReview {
+  newReview {
+    rating
+    description
+  }
+}
+
+query Reviews($where: ReviewWhereInput,$orderBy: [ReviewOrderByWithRelationInput!]) {
+  reviews(where: $where, orderBy: $orderBy) {
+    ...ReviewFields
+  }
+}
+
+fragment ReviewFields on Review {
+  rating
+  description
+}
