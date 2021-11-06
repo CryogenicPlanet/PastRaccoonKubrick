@@ -5,7 +5,7 @@ import { split, HttpLink } from '@apollo/client'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { WebSocketLink } from '@apollo/client/link/ws'
 
-const baseURL = 'localhost:4000/graphql'
+const baseURL = import.meta.env.API_URL || 'localhost:4000/graphql'
 
 const httpLink = new HttpLink({
   uri: `http://${baseURL}`
