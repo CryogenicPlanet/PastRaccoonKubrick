@@ -23,12 +23,73 @@ type AggregateReview {
   _sum: ReviewSumAggregate
 }
 
-input IntFieldUpdateOperationsInput {
-  decrement: Int
-  divide: Int
-  increment: Int
-  multiply: Int
-  set: Int
+"""
+The javascript `Date` as string. Type represents date and time as the ISO Date string.
+"""
+scalar DateTime
+
+input DateTimeFieldUpdateOperationsInput {
+  set: DateTime
+}
+
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
+input DateTimeWithAggregatesFilter {
+  _count: NestedIntFilter
+  _max: NestedDateTimeFilter
+  _min: NestedDateTimeFilter
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeWithAggregatesFilter
+  notIn: [DateTime!]
+}
+
+input FloatFieldUpdateOperationsInput {
+  decrement: Float
+  divide: Float
+  increment: Float
+  multiply: Float
+  set: Float
+}
+
+input FloatFilter {
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: NestedFloatFilter
+  notIn: [Float!]
+}
+
+input FloatWithAggregatesFilter {
+  _avg: NestedFloatFilter
+  _count: NestedIntFilter
+  _max: NestedFloatFilter
+  _min: NestedFloatFilter
+  _sum: NestedFloatFilter
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: NestedFloatWithAggregatesFilter
+  notIn: [Float!]
 }
 
 input IntFilter {
@@ -89,7 +150,7 @@ type Mutation {
   createManyProject(data: [ProjectCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createManyReview(data: [ReviewCreateManyInput!]!, skipDuplicates: Boolean): AffectedRowsOutput!
   createProject(data: ProjectCreateInput!): Project!
-  createReview(description: String!, projectName: String!, rating: Int!): Review!
+  createReview(description: String!, projectName: String!, rating: Float!): Review!
   deleteManyProject(where: ProjectWhereInput): AffectedRowsOutput!
   deleteManyReview(where: ReviewWhereInput): AffectedRowsOutput!
   deleteProject(where: ProjectWhereUniqueInput!): Project
@@ -100,6 +161,31 @@ type Mutation {
   updateReview(data: ReviewUpdateInput!, where: ReviewWhereUniqueInput!): Review
   upsertProject(create: ProjectCreateInput!, update: ProjectUpdateInput!, where: ProjectWhereUniqueInput!): Project!
   upsertReview(create: ReviewCreateInput!, update: ReviewUpdateInput!, where: ReviewWhereUniqueInput!): Review!
+}
+
+input NestedDateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeFilter
+  notIn: [DateTime!]
+}
+
+input NestedDateTimeWithAggregatesFilter {
+  _count: NestedIntFilter
+  _max: NestedDateTimeFilter
+  _min: NestedDateTimeFilter
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: NestedDateTimeWithAggregatesFilter
+  notIn: [DateTime!]
 }
 
 input NestedFloatFilter {
@@ -121,6 +207,22 @@ input NestedFloatNullableFilter {
   lt: Float
   lte: Float
   not: NestedFloatNullableFilter
+  notIn: [Float!]
+}
+
+input NestedFloatWithAggregatesFilter {
+  _avg: NestedFloatFilter
+  _count: NestedIntFilter
+  _max: NestedFloatFilter
+  _min: NestedFloatFilter
+  _sum: NestedFloatFilter
+  equals: Float
+  gt: Float
+  gte: Float
+  in: [Float!]
+  lt: Float
+  lte: Float
+  not: NestedFloatWithAggregatesFilter
   notIn: [Float!]
 }
 
@@ -398,10 +500,11 @@ enum QueryMode {
 
 type Review {
   Project: Project
+  createdAt: DateTime!
   description: String!
   id: Int!
   projectId: Int
-  rating: Int!
+  rating: Float!
 }
 
 type ReviewAvgAggregate {
@@ -418,6 +521,7 @@ input ReviewAvgOrderByAggregateInput {
 
 type ReviewCountAggregate {
   _all: Int!
+  createdAt: Int!
   description: Int!
   id: Int!
   projectId: Int!
@@ -425,6 +529,7 @@ type ReviewCountAggregate {
 }
 
 input ReviewCountOrderByAggregateInput {
+  createdAt: SortOrder
   description: SortOrder
   id: SortOrder
   projectId: SortOrder
@@ -433,21 +538,24 @@ input ReviewCountOrderByAggregateInput {
 
 input ReviewCreateInput {
   Project: ProjectCreateNestedOneWithoutReviewsInput
+  createdAt: DateTime
   description: String!
-  rating: Int!
+  rating: Float!
 }
 
 input ReviewCreateManyInput {
+  createdAt: DateTime
   description: String!
   id: Int
   projectId: Int
-  rating: Int!
+  rating: Float!
 }
 
 input ReviewCreateManyProjectInput {
+  createdAt: DateTime
   description: String!
   id: Int
-  rating: Int!
+  rating: Float!
 }
 
 input ReviewCreateManyProjectInputEnvelope {
@@ -468,8 +576,9 @@ input ReviewCreateOrConnectWithoutProjectInput {
 }
 
 input ReviewCreateWithoutProjectInput {
+  createdAt: DateTime
   description: String!
-  rating: Int!
+  rating: Float!
 }
 
 type ReviewGroupBy {
@@ -478,10 +587,11 @@ type ReviewGroupBy {
   _max: ReviewMaxAggregate
   _min: ReviewMinAggregate
   _sum: ReviewSumAggregate
+  createdAt: DateTime!
   description: String!
   id: Int!
   projectId: Int
-  rating: Int!
+  rating: Float!
 }
 
 input ReviewListRelationFilter {
@@ -491,13 +601,15 @@ input ReviewListRelationFilter {
 }
 
 type ReviewMaxAggregate {
+  createdAt: DateTime
   description: String
   id: Int
   projectId: Int
-  rating: Int
+  rating: Float
 }
 
 input ReviewMaxOrderByAggregateInput {
+  createdAt: SortOrder
   description: SortOrder
   id: SortOrder
   projectId: SortOrder
@@ -505,13 +617,15 @@ input ReviewMaxOrderByAggregateInput {
 }
 
 type ReviewMinAggregate {
+  createdAt: DateTime
   description: String
   id: Int
   projectId: Int
-  rating: Int
+  rating: Float
 }
 
 input ReviewMinOrderByAggregateInput {
+  createdAt: SortOrder
   description: SortOrder
   id: SortOrder
   projectId: SortOrder
@@ -528,6 +642,7 @@ input ReviewOrderByWithAggregationInput {
   _max: ReviewMaxOrderByAggregateInput
   _min: ReviewMinOrderByAggregateInput
   _sum: ReviewSumOrderByAggregateInput
+  createdAt: SortOrder
   description: SortOrder
   id: SortOrder
   projectId: SortOrder
@@ -536,6 +651,7 @@ input ReviewOrderByWithAggregationInput {
 
 input ReviewOrderByWithRelationInput {
   Project: ProjectOrderByWithRelationInput
+  createdAt: SortOrder
   description: SortOrder
   id: SortOrder
   projectId: SortOrder
@@ -543,6 +659,7 @@ input ReviewOrderByWithRelationInput {
 }
 
 enum ReviewScalarFieldEnum {
+  createdAt
   description
   id
   projectId
@@ -553,26 +670,28 @@ input ReviewScalarWhereInput {
   AND: [ReviewScalarWhereInput!]
   NOT: [ReviewScalarWhereInput!]
   OR: [ReviewScalarWhereInput!]
+  createdAt: DateTimeFilter
   description: StringFilter
   id: IntFilter
   projectId: IntNullableFilter
-  rating: IntFilter
+  rating: FloatFilter
 }
 
 input ReviewScalarWhereWithAggregatesInput {
   AND: [ReviewScalarWhereWithAggregatesInput!]
   NOT: [ReviewScalarWhereWithAggregatesInput!]
   OR: [ReviewScalarWhereWithAggregatesInput!]
+  createdAt: DateTimeWithAggregatesFilter
   description: StringWithAggregatesFilter
   id: IntWithAggregatesFilter
   projectId: IntNullableWithAggregatesFilter
-  rating: IntWithAggregatesFilter
+  rating: FloatWithAggregatesFilter
 }
 
 type ReviewSumAggregate {
   id: Int
   projectId: Int
-  rating: Int
+  rating: Float
 }
 
 input ReviewSumOrderByAggregateInput {
@@ -583,13 +702,15 @@ input ReviewSumOrderByAggregateInput {
 
 input ReviewUpdateInput {
   Project: ProjectUpdateOneWithoutReviewsInput
+  createdAt: DateTimeFieldUpdateOperationsInput
   description: StringFieldUpdateOperationsInput
-  rating: IntFieldUpdateOperationsInput
+  rating: FloatFieldUpdateOperationsInput
 }
 
 input ReviewUpdateManyMutationInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
   description: StringFieldUpdateOperationsInput
-  rating: IntFieldUpdateOperationsInput
+  rating: FloatFieldUpdateOperationsInput
 }
 
 input ReviewUpdateManyWithWhereWithoutProjectInput {
@@ -617,8 +738,9 @@ input ReviewUpdateWithWhereUniqueWithoutProjectInput {
 }
 
 input ReviewUpdateWithoutProjectInput {
+  createdAt: DateTimeFieldUpdateOperationsInput
   description: StringFieldUpdateOperationsInput
-  rating: IntFieldUpdateOperationsInput
+  rating: FloatFieldUpdateOperationsInput
 }
 
 input ReviewUpsertWithWhereUniqueWithoutProjectInput {
@@ -632,10 +754,11 @@ input ReviewWhereInput {
   NOT: [ReviewWhereInput!]
   OR: [ReviewWhereInput!]
   Project: ProjectRelationFilter
+  createdAt: DateTimeFilter
   description: StringFilter
   id: IntFilter
   projectId: IntNullableFilter
-  rating: IntFilter
+  rating: FloatFilter
 }
 
 input ReviewWhereUniqueInput {

@@ -16,10 +16,11 @@ generator typegraphql {
 
 model Review {
   id          Int      @id @default(autoincrement())
-  rating      Int
+  rating      Float
   description String
   Project     Project? @relation(fields: [projectId], references: [id])
   projectId   Int?
+  createdAt   DateTime @default(now())
 }
 
 model Project {

@@ -1,0 +1,19 @@
+{
+  "name": "v2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Rahul Tarak",
+  "license": "MIT",
+  "private": true,
+  "devDependencies": {
+    "graphql": "^15.3",
+    "prisma": "^3.4.1"
+  },
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "dependencies": {
+    "@prisma/client": "^3.4.1"
+  }
+}

@@ -1,1 +1,3 @@
 **/node_modules/
+v2/frontend/src/generated/graphql.tsx
+v2/backend/dist
