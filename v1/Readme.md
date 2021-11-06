@@ -27,7 +27,8 @@ The template components are at the bottom of the page
 ```
 
 
-A fairly important decision here was to use Tailwindcss, this is mainly because I really enjoy working with tailwind, it makes css barrable for me and allows me to create UI really fast. That said I was a bit reluctant to use it here as I was not sure if it was allowed
+A fairly important decision here was to use Tailwindcss, this is mainly because I really enjoy working with tailwind, it makes css barrable for me and allows me to create UI really fast. That said I was a bit reluctant to use it here as I was not sure if it was allowed. Also took a template from my personal subscription to https://tailwindui.com/ this is again to help prototyping speed and cause their designs look really good
+
 
 
 ## Backend
