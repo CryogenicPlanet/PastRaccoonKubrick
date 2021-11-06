@@ -9,10 +9,7 @@ import { SubscriptionServer } from "subscriptions-transport-ws";
 import { Prisma, PrismaClient } from "@prisma/client";
 
 import { ApolloServer } from "apollo-server-express";
-import {
-  resolvers,
-  Review,
-} from "@generated/type-graphql";
+import { resolvers, Review } from "@generated/type-graphql";
 import * as tq from "type-graphql";
 import {
   Resolver,
@@ -24,6 +21,7 @@ import {
   Arg,
   Publisher,
   Int,
+  Float,
 } from "type-graphql";
 import path from "path";
 
@@ -34,7 +32,6 @@ type Context = {
     Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined
   >;
 };
-
 
 @Resolver(Review)
 class ReviewSubscriptionResolver {
@@ -49,15 +46,13 @@ class ReviewSubscriptionResolver {
 
   @Mutation((returns) => Review)
   async createReview(
-    @Arg('rating', type => Int) rating: number,
-    @Arg('description', type => String) description: string,
-    @Arg('projectName', type => String) projectName: string,
+    @Arg("rating", (type) => Float) rating: number,
+    @Arg("description", (type) => String) description: string,
+    @Arg("projectName", (type) => String) projectName: string,
 
-
-    
     @Ctx() { prisma }: Context,
     @PubSub("Review") publish: Publisher<Review>
-  ): Promise<boolean> {
+  ): Promise<Review> {
     try {
       const newReview = await prisma.review.create({
         data: {
@@ -68,10 +63,10 @@ class ReviewSubscriptionResolver {
       });
 
       await publish(newReview);
-      return true;
+      return newReview;
     } catch (err) {
       console.error(err);
-      return false;
+      throw new Error(err as string);
     }
   }
 }
@@ -81,12 +76,19 @@ class ReviewSubscriptionResolver {
 
   const schema = await tq.buildSchema({
     resolvers: [...resolvers, ReviewSubscriptionResolver],
-    emitSchemaFile : path.resolve(__dirname, "../prisma", "generated/type-graphql", "schema.gql")
+    emitSchemaFile: path.resolve(
+      __dirname,
+      "../../prisma",
+      "generated/type-graphql",
+      "schema.gql"
+    ),
   });
 
   const httpServer = createServer(app);
 
   const prisma = new PrismaClient();
+
+  await prisma.$connect()
 
   const context = () => {
     return {
@@ -97,6 +99,17 @@ class ReviewSubscriptionResolver {
   const server = new ApolloServer({
     schema,
     context,
+      plugins: [
+      {
+        async serverWillStart() {
+          return {
+            async drainServer() {
+              await prisma.$disconnect()
+            },
+          };
+        },
+      },
+    ],
   });
 
   SubscriptionServer.create(
