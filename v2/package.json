@@ -15,5 +15,9 @@
   ],
   "dependencies": {
     "@prisma/client": "^3.4.1"
+  },
+  "scripts": {
+    "build": "cd backend && yarn build",
+    "start": "node backend/dist/index.js"
   }
 }

@@ -1,18 +1,22 @@
-import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
+import {
+  ApolloClient,
+  ApolloProvider,
+  HttpLink,
+  InMemoryCache,
+  split
+} from '@apollo/client'
+import { WebSocketLink } from '@apollo/client/link/ws'
+import { getMainDefinition } from '@apollo/client/utilities'
 import React from 'react'
 
-import { split, HttpLink } from '@apollo/client'
-import { getMainDefinition } from '@apollo/client/utilities'
-import { WebSocketLink } from '@apollo/client/link/ws'
-
-const baseURL = import.meta.env.API_URL || 'localhost:4000/graphql'
+const baseURL = '00aaf4d2a62d.up.railway.app/graphql'
 
 const httpLink = new HttpLink({
-  uri: `http://${baseURL}`
+  uri: `https://${baseURL}`
 })
 
 const wsLink = new WebSocketLink({
-  uri: `ws://${baseURL}`,
+  uri: `wss://${baseURL}`,
   options: {
     reconnect: true
   }

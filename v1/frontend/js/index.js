@@ -9,7 +9,8 @@ const dummyData = {
   ],
 };
 
-const SERVER_PATH = "http://localhost:5000";
+//  Not sure how to do env variables in vanilla javascript so variables here is hard coded
+const SERVER_PATH = "https://gumroad-challenge-v1-version-1.up.railway.app";
 
 //  Constant tailwind classes
 const FILLED_STAR_CLASS = "text-gray-900";

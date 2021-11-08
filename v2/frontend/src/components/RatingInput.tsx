@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 /**
  * Custom Star Input
@@ -13,8 +13,6 @@ export const RatingInput = ({
   rating: number
   setRating: (_val: number) => void
 }) => {
-  const [tempRating, setTempRating] = useState(rating)
-
   //   const handleMouseover = (rating: number) => {
   //     setRating(rating)
   //     setTempRating(rating)
@@ -26,7 +24,6 @@ export const RatingInput = ({
 
   const rate = (rating: number) => {
     setRating(rating)
-    setTempRating(rating)
   }
 
   const stars = []
